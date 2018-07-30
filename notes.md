@@ -3,7 +3,7 @@
 ## 项目理解：
 1. 项目结构：  
 
-```py
+```
 project
 |
 |---agents
@@ -42,7 +42,7 @@ reward_z = np.tanh(1.-.003*(abs(self.sim.pose[2] - self.target_pos[2]))).sum()
 reward = reward_xy + reward_z
 ```
 - Actor 设置（`actor.py`）：
-```py
+```
 layer1: state -> Dense(512, regularizers.l2(1e-6)) -> BatchNormalization -> relu
 layer2: layer1 -> Dense(256, regularizers.l2(1e-6)) -> BatchNormalization -> relu
 layer3: layer2 -> Dense(action_size, initializers.RandomUniform(-0.003, 0.003))
@@ -50,24 +50,24 @@ optimizers.Adam(lr=0.0001)
 ```
 - Critic 设置（`critic.py`）：
     - For state pathway:
-    ```py
+    ```
     state_layer1: states -> Dense(512, regularizers.l2(1e-6)) -> BatchNormalization -> relu
     ```
     - For action pathway:
-    ```py
+    ```
     state_layer2: state_layer1 -> Dense(256, regularizers.l2(1e-6)) -> relu
     action_layer1: actions -> Dense(256, regularizers.l2(1e-6))-> relu
     ```
     - Combine state and action pathways:
-    ```py
+    ```
     net: [net_states, net_actions] -> Add -> relu    
     ```
 
     - Final output Q values:
-    ```py
+    ```
     Q_values: net -> Dense(1, initializers.RandomUniform(-0.003, 0.003))
     ```
     - Optimizer:
-    ```py
+    ```
     optimizers.Adam(lr=0.001)
     ```
